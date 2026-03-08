@@ -7,6 +7,8 @@ This repository demonstrates a practical compatibility model for OpenTelemetry i
 - `FwoTelemetry.OpenTelemetry` targets `net48` and bridges the same contract to OpenTelemetry.
 - `FwoTelemetry.SampleApp` targets `net48` and shows the adapter in use.
 
+License: MIT. See [LICENSE](d:\Research\DotNetFWOtelPub\LICENSE).
+
 ## Compatibility model
 
 OpenTelemetry's current .NET packages do not target `.NET Framework 4.5`. Because of that, the backward-compatible approach is not a single binary. The clean design is:

@@ -10,6 +10,7 @@
   <PropertyGroup Condition="'$(IsPackable)' == 'true'">
     <Authors>DotNetFWOtelPub</Authors>
     <Company>DotNetFWOtelPub</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
