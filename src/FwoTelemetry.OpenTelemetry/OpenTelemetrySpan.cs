@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using FwoTelemetry.Abstractions;
+
 namespace FwoTelemetry.OpenTelemetry
 {
     internal sealed class OpenTelemetrySpan : ITelemetrySpan
     {
         private readonly Activity activity;
+        private readonly TelemetrySanitizer sanitizer;
 
-        public OpenTelemetrySpan(Activity activity)
+        public OpenTelemetrySpan(Activity activity, TelemetrySanitizer sanitizer)
         {
             this.activity = activity;
+            this.sanitizer = sanitizer;
         }
 
         public string TraceId
@@ -25,34 +28,22 @@ namespace FwoTelemetry.OpenTelemetry
 
         public void SetAttribute(string key, string value)
         {
-            if (this.activity != null)
-            {
-                this.activity.SetTag(key, value);
-            }
+            this.SetAttributes(new Dictionary<string, object> { { key, value } });
         }
 
         public void SetAttribute(string key, long value)
         {
-            if (this.activity != null)
-            {
-                this.activity.SetTag(key, value);
-            }
+            this.SetAttributes(new Dictionary<string, object> { { key, value } });
         }
 
         public void SetAttribute(string key, double value)
         {
-            if (this.activity != null)
-            {
-                this.activity.SetTag(key, value);
-            }
+            this.SetAttributes(new Dictionary<string, object> { { key, value } });
         }
 
         public void SetAttribute(string key, bool value)
         {
-            if (this.activity != null)
-            {
-                this.activity.SetTag(key, value);
-            }
+            this.SetAttributes(new Dictionary<string, object> { { key, value } });
         }
 
         public void AddEvent(string name, IDictionary<string, object> attributes = null)
@@ -63,12 +54,13 @@ namespace FwoTelemetry.OpenTelemetry
             }
 
             ActivityTagsCollection tags = null;
+            var sanitized = this.sanitizer.SanitizeSpanAttributes(attributes);
 
-            if (attributes != null && attributes.Count > 0)
+            if (sanitized.Count > 0)
             {
                 tags = new ActivityTagsCollection();
 
-                foreach (var entry in attributes)
+                foreach (var entry in sanitized)
                 {
                     tags.Add(entry.Key, entry.Value);
                 }
@@ -79,10 +71,20 @@ namespace FwoTelemetry.OpenTelemetry
 
         public void RecordException(Exception exception)
         {
-            if (this.activity != null && exception != null)
+            if (this.activity == null || exception == null)
             {
-                this.activity.AddException(exception);
+                return;
             }
+
+            this.activity.AddEvent(
+                new ActivityEvent(
+                    "exception",
+                    DateTimeOffset.UtcNow,
+                    new ActivityTagsCollection
+                    {
+                        { "exception.type", exception.GetType().FullName },
+                        { "exception.message", this.sanitizer.SanitizeExceptionMessage(exception.Message) },
+                    }));
         }
 
         public void SetStatus(TelemetryStatusCode statusCode, string description = null)
@@ -111,6 +113,19 @@ namespace FwoTelemetry.OpenTelemetry
             if (this.activity != null)
             {
                 this.activity.Dispose();
+            }
+        }
+
+        private void SetAttributes(IDictionary<string, object> attributes)
+        {
+            if (this.activity == null)
+            {
+                return;
+            }
+
+            foreach (var entry in this.sanitizer.SanitizeSpanAttributes(attributes))
+            {
+                this.activity.SetTag(entry.Key, entry.Value);
             }
         }
     }

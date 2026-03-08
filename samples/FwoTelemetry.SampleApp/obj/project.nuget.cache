@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wOgyG0QsXgk=",
+  "dgSpecHash": "Aa9rUJCs8RM=",
   "success": true,
   "projectFilePath": "D:\\Research\\DotNetFWOtelPub\\samples\\FwoTelemetry.SampleApp\\FwoTelemetry.SampleApp.csproj",
   "expectedPackageFiles": [
@@ -24,7 +24,11 @@
     "C:\\Users\\Button\\.nuget\\packages\\opentelemetry.api.providerbuilderextensions\\1.15.0\\opentelemetry.api.providerbuilderextensions.1.15.0.nupkg.sha512",
     "C:\\Users\\Button\\.nuget\\packages\\opentelemetry.exporter.console\\1.15.0\\opentelemetry.exporter.console.1.15.0.nupkg.sha512",
     "C:\\Users\\Button\\.nuget\\packages\\opentelemetry.exporter.opentelemetryprotocol\\1.15.0\\opentelemetry.exporter.opentelemetryprotocol.1.15.0.nupkg.sha512",
+    "C:\\Users\\Button\\.nuget\\packages\\opentelemetry.instrumentation.aspnet\\1.15.1\\opentelemetry.instrumentation.aspnet.1.15.1.nupkg.sha512",
+    "C:\\Users\\Button\\.nuget\\packages\\opentelemetry.instrumentation.aspnet.telemetryhttpmodule\\1.15.1\\opentelemetry.instrumentation.aspnet.telemetryhttpmodule.1.15.1.nupkg.sha512",
+    "C:\\Users\\Button\\.nuget\\packages\\opentelemetry.instrumentation.http\\1.15.0\\opentelemetry.instrumentation.http.1.15.0.nupkg.sha512",
     "C:\\Users\\Button\\.nuget\\packages\\system.buffers\\4.6.1\\system.buffers.4.6.1.nupkg.sha512",
+    "C:\\Users\\Button\\.nuget\\packages\\system.configuration.configurationmanager\\10.0.3\\system.configuration.configurationmanager.10.0.3.nupkg.sha512",
     "C:\\Users\\Button\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.0\\system.diagnostics.diagnosticsource.10.0.0.nupkg.sha512",
     "C:\\Users\\Button\\.nuget\\packages\\system.memory\\4.6.3\\system.memory.4.6.3.nupkg.sha512",
     "C:\\Users\\Button\\.nuget\\packages\\system.numerics.vectors\\4.6.1\\system.numerics.vectors.4.6.1.nupkg.sha512",

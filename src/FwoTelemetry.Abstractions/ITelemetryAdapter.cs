@@ -9,6 +9,8 @@ namespace FwoTelemetry.Abstractions
 
         ITelemetryLogHook Logging { get; }
 
+        bool ForceFlush(int timeoutMilliseconds);
+
         ITelemetrySpan StartSpan(
             string name,
             TelemetrySpanKind kind = TelemetrySpanKind.Internal,

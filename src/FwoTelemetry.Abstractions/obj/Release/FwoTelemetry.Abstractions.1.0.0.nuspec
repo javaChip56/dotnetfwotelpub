@@ -8,7 +8,7 @@
     <readme>README.package.md</readme>
     <description>Net45-compatible telemetry abstractions for spans, metrics, propagation, and logging hooks.</description>
     <tags>opentelemetry otel telemetry net45 net48</tags>
-    <repository type="git" />
+    <repository type="git" commit="37f60745011cb68eea5eabcd7644462fe2501b62" />
     <dependencies>
       <group targetFramework=".NETFramework4.5" />
     </dependencies>

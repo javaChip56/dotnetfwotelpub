@@ -2,17 +2,27 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using FwoTelemetry.Abstractions;
 
 namespace FwoTelemetry.OpenTelemetry
 {
-    public sealed class OpenTelemetryLogHook : ITelemetryLogHook
+    public sealed class OpenTelemetryLogHook : ITelemetryLogHook, IDisposable
     {
+        private readonly BlockingCollection<TelemetryLogEntry> queue;
         private readonly ConcurrentBag<ITelemetryLogSink> sinks;
+        private readonly TelemetrySanitizer sanitizer;
+        private readonly Thread worker;
 
-        public OpenTelemetryLogHook()
+        internal OpenTelemetryLogHook(TelemetrySanitizer sanitizer)
         {
+            this.sanitizer = sanitizer;
             this.sinks = new ConcurrentBag<ITelemetryLogSink>();
+            this.queue = new BlockingCollection<TelemetryLogEntry>(1024);
+            this.worker = new Thread(this.ProcessQueue);
+            this.worker.IsBackground = true;
+            this.worker.Name = "FwoTelemetry.LogHook";
+            this.worker.Start();
         }
 
         public void RegisterSink(ITelemetryLogSink sink)
@@ -48,16 +58,24 @@ namespace FwoTelemetry.OpenTelemetry
                 return;
             }
 
+            var sanitized = this.sanitizer.SanitizeLogProperties(properties);
             var context = this.GetCurrentContext();
 
-            if (!string.IsNullOrWhiteSpace(context.TraceId) && !properties.ContainsKey("trace.id"))
+            if (!string.IsNullOrWhiteSpace(context.TraceId) && !sanitized.ContainsKey("trace.id"))
             {
-                properties["trace.id"] = context.TraceId;
+                sanitized["trace.id"] = context.TraceId;
             }
 
-            if (!string.IsNullOrWhiteSpace(context.SpanId) && !properties.ContainsKey("span.id"))
+            if (!string.IsNullOrWhiteSpace(context.SpanId) && !sanitized.ContainsKey("span.id"))
             {
-                properties["span.id"] = context.SpanId;
+                sanitized["span.id"] = context.SpanId;
+            }
+
+            properties.Clear();
+
+            foreach (var item in sanitized)
+            {
+                properties[item.Key] = item.Value;
             }
         }
 
@@ -79,17 +97,36 @@ namespace FwoTelemetry.OpenTelemetry
 
             if (properties != null)
             {
-                foreach (var property in properties)
+                foreach (var property in this.sanitizer.SanitizeLogProperties(properties))
                 {
                     entry.Properties[property.Key] = property.Value;
                 }
             }
 
             this.Enrich(entry.Properties);
+            this.queue.TryAdd(entry);
+        }
 
-            foreach (var sink in this.sinks)
+        public void Dispose()
+        {
+            this.queue.CompleteAdding();
+            this.worker.Join(TimeSpan.FromSeconds(2));
+        }
+
+        private void ProcessQueue()
+        {
+            foreach (var entry in this.queue.GetConsumingEnumerable())
             {
-                sink.Write(entry);
+                foreach (var sink in this.sinks)
+                {
+                    try
+                    {
+                        sink.Write(entry);
+                    }
+                    catch
+                    {
+                    }
+                }
             }
         }
     }

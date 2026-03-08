@@ -8,7 +8,7 @@
     <readme>README.package.md</readme>
     <description>OpenTelemetry-backed implementation of the FwoTelemetry abstraction surface for .NET Framework 4.8.</description>
     <tags>opentelemetry otel telemetry net48 legacy</tags>
-    <repository type="git" />
+    <repository type="git" commit="37f60745011cb68eea5eabcd7644462fe2501b62" />
     <dependencies>
       <group targetFramework=".NETFramework4.8">
         <dependency id="FwoTelemetry.Abstractions" version="1.0.0" exclude="Build,Analyzers" />
@@ -16,6 +16,9 @@
         <dependency id="OpenTelemetry.Api" version="1.15.0" exclude="Build,Analyzers" />
         <dependency id="OpenTelemetry.Exporter.Console" version="1.15.0" exclude="Build,Analyzers" />
         <dependency id="OpenTelemetry.Exporter.OpenTelemetryProtocol" version="1.15.0" exclude="Build,Analyzers" />
+        <dependency id="OpenTelemetry.Instrumentation.AspNet" version="1.15.1" exclude="Build,Analyzers" />
+        <dependency id="OpenTelemetry.Instrumentation.Http" version="1.15.0" exclude="Build,Analyzers" />
+        <dependency id="System.Configuration.ConfigurationManager" version="10.0.3" exclude="Build,Analyzers" />
         <dependency id="System.Diagnostics.DiagnosticSource" version="10.0.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>

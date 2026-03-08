@@ -11,22 +11,39 @@ namespace FwoTelemetry.SampleApp
     {
         private static void Main()
         {
-            var options = new TelemetryOptions
+            var options = TelemetryOptionsLoader.LoadFromAppSettings();
+            options.OtlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT");
+            options.OtlpHeaders = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
+            options.ResourceAttributes["sample.owner"] = "FwoTelemetry";
+            options.Redaction.Headers.AllowedKeys.Add("traceparent");
+            options.Redaction.Headers.AllowedKeys.Add("tracestate");
+            options.Redaction.Headers.AllowedKeys.Add("baggage");
+            options.Redaction.Headers.DropUnknownKeys = true;
+            options.Redaction.LogProperties.SensitiveKeys.Add("customer.email");
+            options.Redaction.SpanAttributes.SensitiveKeys.Add("customer.email");
+            options.MetricDefinitions.Add(new TelemetryMetricDefinition
             {
-                ServiceName = "FwoTelemetry.SampleApp",
-                ServiceVersion = "1.0.0",
-                TracerName = "FwoTelemetry.SampleApp.Trace",
-                MeterName = "FwoTelemetry.SampleApp.Metrics",
-                OtlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT"),
-                OtlpHeaders = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS"),
-                EnableConsoleExporter = true,
-            };
+                Name = "sample.requests",
+                MetricType = TelemetryMetricType.Counter,
+                Unit = "request",
+                Description = "Number of sample requests",
+            });
+            options.MetricDefinitions[0].AllowedTagKeys.Add("operation");
+            options.MetricDefinitions.Add(new TelemetryMetricDefinition
+            {
+                Name = "sample.duration.ms",
+                MetricType = TelemetryMetricType.Histogram,
+                Unit = "ms",
+                Description = "Execution time for the sample operation",
+            });
+            options.MetricDefinitions[1].AllowedTagKeys.Add("operation");
 
-            options.ResourceAttributes["deployment.environment"] = "local";
+            var telemetry = TelemetryRuntime.Initialize(options);
 
-            using (var telemetry = new OpenTelemetryAdapter(options))
+            try
             {
                 telemetry.Logging.RegisterSink(new ConsoleLegacyLogSink());
+                telemetry.Logging.RegisterSink(new TraceSourceTelemetryLogSink(new TraceSource("FwoTelemetry.SampleApp")));
 
                 using (var producerSpan = telemetry.StartSpan(
                     "sample.outbound",
@@ -52,6 +69,11 @@ namespace FwoTelemetry.SampleApp
                     ProcessIncomingMessage(telemetry, outboundHeaders);
                 }
             }
+            finally
+            {
+                TelemetryRuntime.ForceFlush(5000);
+                TelemetryRuntime.Shutdown();
+            }
 
             Console.WriteLine("Telemetry sample completed.");
         }
@@ -75,6 +97,7 @@ namespace FwoTelemetry.SampleApp
                 var legacyProperties = new Dictionary<string, object>
                 {
                     { "operation", "sample.inbound" },
+                    { "customer.email", "customer@example.com" },
                 };
 
                 telemetry.Logging.Enrich(legacyProperties);

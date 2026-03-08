@@ -66,12 +66,19 @@
             }
           },
           "centralPackageVersions": {
+            "coverlet.collector": "6.0.2",
+            "Microsoft.NET.Test.Sdk": "17.12.0",
             "Microsoft.NETFramework.ReferenceAssemblies": "1.0.3",
             "OpenTelemetry": "1.15.0",
             "OpenTelemetry.Api": "1.15.0",
             "OpenTelemetry.Exporter.Console": "1.15.0",
             "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.15.0",
-            "System.Diagnostics.DiagnosticSource": "10.0.0"
+            "OpenTelemetry.Instrumentation.AspNet": "1.15.1",
+            "OpenTelemetry.Instrumentation.Http": "1.15.0",
+            "System.Configuration.ConfigurationManager": "10.0.3",
+            "System.Diagnostics.DiagnosticSource": "10.0.0",
+            "xunit": "2.9.2",
+            "xunit.runner.visualstudio": "2.8.2"
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
         }
@@ -137,12 +144,19 @@
             }
           },
           "centralPackageVersions": {
+            "coverlet.collector": "6.0.2",
+            "Microsoft.NET.Test.Sdk": "17.12.0",
             "Microsoft.NETFramework.ReferenceAssemblies": "1.0.3",
             "OpenTelemetry": "1.15.0",
             "OpenTelemetry.Api": "1.15.0",
             "OpenTelemetry.Exporter.Console": "1.15.0",
             "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.15.0",
-            "System.Diagnostics.DiagnosticSource": "10.0.0"
+            "OpenTelemetry.Instrumentation.AspNet": "1.15.1",
+            "OpenTelemetry.Instrumentation.Http": "1.15.0",
+            "System.Configuration.ConfigurationManager": "10.0.3",
+            "System.Diagnostics.DiagnosticSource": "10.0.0",
+            "xunit": "2.9.2",
+            "xunit.runner.visualstudio": "2.8.2"
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
         }
@@ -225,6 +239,21 @@
               "version": "[1.15.0, )",
               "versionCentrallyManaged": true
             },
+            "OpenTelemetry.Instrumentation.AspNet": {
+              "target": "Package",
+              "version": "[1.15.1, )",
+              "versionCentrallyManaged": true
+            },
+            "OpenTelemetry.Instrumentation.Http": {
+              "target": "Package",
+              "version": "[1.15.0, )",
+              "versionCentrallyManaged": true
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[10.0.3, )",
+              "versionCentrallyManaged": true
+            },
             "System.Diagnostics.DiagnosticSource": {
               "target": "Package",
               "version": "[10.0.0, )",
@@ -232,12 +261,19 @@
             }
           },
           "centralPackageVersions": {
+            "coverlet.collector": "6.0.2",
+            "Microsoft.NET.Test.Sdk": "17.12.0",
             "Microsoft.NETFramework.ReferenceAssemblies": "1.0.3",
             "OpenTelemetry": "1.15.0",
             "OpenTelemetry.Api": "1.15.0",
             "OpenTelemetry.Exporter.Console": "1.15.0",
             "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.15.0",
-            "System.Diagnostics.DiagnosticSource": "10.0.0"
+            "OpenTelemetry.Instrumentation.AspNet": "1.15.1",
+            "OpenTelemetry.Instrumentation.Http": "1.15.0",
+            "System.Configuration.ConfigurationManager": "10.0.3",
+            "System.Diagnostics.DiagnosticSource": "10.0.0",
+            "xunit": "2.9.2",
+            "xunit.runner.visualstudio": "2.8.2"
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
         }

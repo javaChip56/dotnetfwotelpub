@@ -22,6 +22,11 @@ That lets one application code path remain source-compatible across `net45` thro
 - Trace spans and metrics through one shared adapter interface.
 - HTTP/text-map propagation with `Inject` and `Extract` methods over plain dictionaries.
 - Legacy logging hooks that enrich log properties with trace and span identifiers.
+- Config-driven runtime initialization for .NET Framework 4.8 applications.
+- Redaction policies for span attributes, metric tags, log properties, and propagated headers.
+- Metric schema enforcement with approved metric names and tag keys.
+- Automatic ASP.NET and `HttpClient` instrumentation through OpenTelemetry instrumentation packages.
+- Unit tests plus collector-backed smoke validation.
 - NuGet packaging metadata for the reusable library projects.
 
 ## Usage
@@ -70,31 +75,93 @@ Reference:
 </ItemGroup>
 ```
 
-Create the adapter:
+Create the runtime from `appSettings`:
+
+```xml
+<appSettings>
+  <add key="FwoTelemetry:ServiceName" value="My.Legacy.Service" />
+  <add key="FwoTelemetry:ServiceVersion" value="1.0.0" />
+  <add key="FwoTelemetry:EnvironmentName" value="prod" />
+  <add key="FwoTelemetry:TracerName" value="My.Legacy.Service.Trace" />
+  <add key="FwoTelemetry:MeterName" value="My.Legacy.Service.Metrics" />
+  <add key="FwoTelemetry:EnableConsoleExporter" value="false" />
+  <add key="FwoTelemetry:EnableHttpClientInstrumentation" value="true" />
+  <add key="FwoTelemetry:EnableAspNetInstrumentation" value="true" />
+  <add key="FwoTelemetry:StrictMetricSchema" value="true" />
+  <add key="FwoTelemetry:SamplingRatio" value="1.0" />
+  <add key="FwoTelemetry:ExportTimeoutMilliseconds" value="10000" />
+</appSettings>
+```
+
+Initialize once at process startup:
 
 ```csharp
 using FwoTelemetry.Abstractions;
 using FwoTelemetry.OpenTelemetry;
 
-var options = new TelemetryOptions
-{
-    ServiceName = "My.Legacy.Service",
-    ServiceVersion = "1.0.0",
-    TracerName = "My.Legacy.Service.Trace",
-    MeterName = "My.Legacy.Service.Metrics",
-    OtlpEndpoint = "http://localhost:4318",
-    EnableConsoleExporter = true,
-};
+var options = TelemetryOptionsLoader.LoadFromAppSettings();
+options.OtlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT");
+options.OtlpHeaders = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
+options.Redaction.LogProperties.SensitiveKeys.Add("customer.email");
+options.Redaction.SpanAttributes.SensitiveKeys.Add("customer.email");
+options.Redaction.Headers.AllowedKeys.Add("traceparent");
+options.Redaction.Headers.AllowedKeys.Add("tracestate");
+options.Redaction.Headers.AllowedKeys.Add("baggage");
+options.Redaction.Headers.DropUnknownKeys = true;
 
-using (var telemetry = new OpenTelemetryAdapter(options))
+options.MetricDefinitions.Add(new TelemetryMetricDefinition
 {
-    using (var span = telemetry.StartSpan("orders.submit"))
-    {
-        telemetry.IncrementCounter("orders.requests");
-        telemetry.RecordHistogram("orders.duration.ms", 42.5, unit: "ms");
-        span.SetStatus(TelemetryStatusCode.Ok);
-    }
+    Name = "orders.requests",
+    MetricType = TelemetryMetricType.Counter,
+    Unit = "request",
+    Description = "Number of order requests",
+});
+options.MetricDefinitions[0].AllowedTagKeys.Add("operation");
+
+options.MetricDefinitions.Add(new TelemetryMetricDefinition
+{
+    Name = "orders.duration.ms",
+    MetricType = TelemetryMetricType.Histogram,
+    Unit = "ms",
+    Description = "Order processing duration",
+});
+options.MetricDefinitions[1].AllowedTagKeys.Add("operation");
+
+var telemetry = TelemetryRuntime.Initialize(options);
+```
+
+Use the singleton runtime during request or job handling:
+
+```csharp
+var telemetry = TelemetryRuntime.Current;
+
+using (var span = telemetry.StartSpan("orders.submit"))
+{
+    telemetry.IncrementCounter(
+        "orders.requests",
+        attributes: new Dictionary<string, object>
+        {
+            { "operation", "orders.submit" },
+        });
+
+    telemetry.RecordHistogram(
+        "orders.duration.ms",
+        42.5,
+        new Dictionary<string, object>
+        {
+            { "operation", "orders.submit" },
+        },
+        unit: "ms");
+
+    span.SetStatus(TelemetryStatusCode.Ok);
 }
+```
+
+Flush and shut down on process exit:
+
+```csharp
+TelemetryRuntime.ForceFlush(5000);
+TelemetryRuntime.Shutdown();
 ```
 
 ### HTTP propagation
@@ -161,6 +228,47 @@ telemetry.Logging.Log(
     "Submitting order",
     properties: properties);
 ```
+
+Built-in production sinks:
+
+```csharp
+telemetry.Logging.RegisterSink(new TraceSourceTelemetryLogSink(new TraceSource("Orders")));
+telemetry.Logging.RegisterSink(new LoggerTelemetryLogSink(logger));
+```
+
+### ASP.NET and `HttpClient` integration
+
+If `FwoTelemetry:EnableAspNetInstrumentation=true`, inbound ASP.NET requests are automatically traced once the runtime has been initialized.
+
+Example `Global.asax`:
+
+```csharp
+protected void Application_Start()
+{
+    var options = TelemetryOptionsLoader.LoadFromAppSettings();
+    options.OtlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT");
+    TelemetryRuntime.Initialize(options);
+}
+
+protected void Application_End()
+{
+    TelemetryRuntime.ForceFlush(5000);
+    TelemetryRuntime.Shutdown();
+}
+```
+
+If `FwoTelemetry:EnableHttpClientInstrumentation=true`, outbound `HttpClient` calls are automatically traced and linked to the current request span as long as they execute inside an active span or inbound ASP.NET request.
+
+### Production controls
+
+Recommended baseline:
+
+- initialize telemetry once per process through `TelemetryRuntime`
+- keep `StrictMetricSchema=true` and pre-register metric names and allowed tag keys
+- define redaction for sensitive fields such as emails, account IDs, tokens, and auth headers
+- keep OTLP export over HTTP/protobuf on .NET Framework
+- use log sinks that feed your existing logger or `TraceSource`
+- flush on controlled shutdown paths
 
 ### Where to use the adapter
 
@@ -258,6 +366,22 @@ If you follow that pattern, the backend can show:
 - the link between outbound and inbound components
 - correlated logs for the same trace
 - metrics such as request count and duration for the same operations
+
+## Validation
+
+Run unit tests:
+
+```powershell
+dotnet test .\DotNetFWOtelPub.sln
+```
+
+Run collector-backed validation:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tests\run-collector-validation.ps1
+```
+
+The collector validation script starts `otel/opentelemetry-collector-contrib:0.143.0`, sends sample telemetry to `http://localhost:4318`, and verifies that the collector output contains both traces and metrics.
 
 ## Build
 

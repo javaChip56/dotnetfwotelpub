@@ -36,3 +36,8 @@ D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\obj\Release\net48\Fwo
 D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\obj\Release\net48\FwoTelem.E9BAD1F9.Up2Date
 D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\obj\Release\net48\FwoTelemetry.OpenTelemetry.dll
 D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\obj\Release\net48\FwoTelemetry.OpenTelemetry.pdb
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\bin\Release\net48\OpenTelemetry.Instrumentation.AspNet.dll
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\bin\Release\net48\OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule.dll
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\bin\Release\net48\OpenTelemetry.Instrumentation.Http.dll
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\bin\Release\net48\System.Configuration.ConfigurationManager.dll
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\obj\Release\net48\FwoTelemetry.OpenTelemetry.sourcelink.json

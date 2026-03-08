@@ -19,8 +19,10 @@ namespace FwoTelemetry.OpenTelemetry
         private readonly MeterProvider meterProvider;
         private readonly ConcurrentDictionary<string, Counter<long>> counters;
         private readonly ConcurrentDictionary<string, Histogram<double>> histograms;
-        private readonly ITelemetryPropagator propagator;
-        private readonly ITelemetryLogHook logging;
+        private readonly OpenTelemetryPropagator propagator;
+        private readonly OpenTelemetryLogHook logging;
+        private readonly TelemetrySanitizer sanitizer;
+        private readonly TelemetryMetricCatalog metricCatalog;
 
         public OpenTelemetryAdapter(TelemetryOptions options)
         {
@@ -33,6 +35,8 @@ namespace FwoTelemetry.OpenTelemetry
             {
                 throw new ArgumentException("ServiceName is required.", "options");
             }
+
+            options = NormalizeOptions(options);
 
             var tracerName = string.IsNullOrWhiteSpace(options.TracerName)
                 ? options.ServiceName
@@ -48,27 +52,40 @@ namespace FwoTelemetry.OpenTelemetry
             this.meter = new Meter(meterName);
             this.counters = new ConcurrentDictionary<string, Counter<long>>();
             this.histograms = new ConcurrentDictionary<string, Histogram<double>>();
-            this.propagator = new OpenTelemetryPropagator();
-            this.logging = new OpenTelemetryLogHook();
+            this.sanitizer = new TelemetrySanitizer(options.Redaction);
+            this.metricCatalog = new TelemetryMetricCatalog(options);
+            this.propagator = new OpenTelemetryPropagator(this.sanitizer);
+            this.logging = new OpenTelemetryLogHook(this.sanitizer);
 
             var tracerProviderBuilder = Sdk.CreateTracerProviderBuilder()
                 .SetResourceBuilder(resourceBuilder)
+                .SetSampler(new TraceIdRatioBasedSampler(options.SamplingRatio))
                 .AddSource(tracerName);
 
             var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
                 .SetResourceBuilder(resourceBuilder)
                 .AddMeter(meterName);
 
+            if (options.EnableAspNetInstrumentation)
+            {
+                tracerProviderBuilder.AddAspNetInstrumentation();
+            }
+
+            if (options.EnableHttpClientInstrumentation)
+            {
+                tracerProviderBuilder.AddHttpClientInstrumentation();
+            }
+
             if (!string.IsNullOrWhiteSpace(options.OtlpEndpoint))
             {
                 tracerProviderBuilder.AddOtlpExporter(exporterOptions =>
                 {
-                    ConfigureExporter(exporterOptions, options);
+                    ConfigureTraceExporter(exporterOptions, options);
                 });
 
                 meterProviderBuilder.AddOtlpExporter(exporterOptions =>
                 {
-                    ConfigureExporter(exporterOptions, options);
+                    ConfigureMetricExporter(exporterOptions, options);
                 });
             }
 
@@ -90,6 +107,13 @@ namespace FwoTelemetry.OpenTelemetry
         public ITelemetryLogHook Logging
         {
             get { return this.logging; }
+        }
+
+        public bool ForceFlush(int timeoutMilliseconds)
+        {
+            var traceFlushed = this.tracerProvider.ForceFlush(timeoutMilliseconds);
+            var metricFlushed = this.meterProvider.ForceFlush(timeoutMilliseconds);
+            return traceFlushed && metricFlushed;
         }
 
         public ITelemetrySpan StartSpan(
@@ -120,13 +144,13 @@ namespace FwoTelemetry.OpenTelemetry
 
             if (activity != null && attributes != null)
             {
-                foreach (var entry in attributes)
+                foreach (var entry in this.sanitizer.SanitizeSpanAttributes(attributes))
                 {
                     activity.SetTag(entry.Key, entry.Value);
                 }
             }
 
-            return new OpenTelemetrySpan(activity);
+            return new OpenTelemetrySpan(activity, this.sanitizer);
         }
 
         public void IncrementCounter(
@@ -136,11 +160,13 @@ namespace FwoTelemetry.OpenTelemetry
             string unit = null,
             string description = null)
         {
+            var definition = this.metricCatalog.Resolve(name, TelemetryMetricType.Counter, unit, description);
             var counter = this.counters.GetOrAdd(
                 name,
-                instrumentName => this.meter.CreateCounter<long>(instrumentName, unit, description));
+                instrumentName => this.meter.CreateCounter<long>(instrumentName, definition.Unit, definition.Description));
 
-            counter.Add(value, ToTagArray(attributes));
+            var sanitized = this.sanitizer.SanitizeMetricTags(attributes, definition.AllowedTagKeys);
+            counter.Add(value, this.sanitizer.ToTagArray(sanitized));
         }
 
         public void RecordHistogram(
@@ -150,15 +176,19 @@ namespace FwoTelemetry.OpenTelemetry
             string unit = null,
             string description = null)
         {
+            var definition = this.metricCatalog.Resolve(name, TelemetryMetricType.Histogram, unit, description);
             var histogram = this.histograms.GetOrAdd(
                 name,
-                instrumentName => this.meter.CreateHistogram<double>(instrumentName, unit, description));
+                instrumentName => this.meter.CreateHistogram<double>(instrumentName, definition.Unit, definition.Description));
 
-            histogram.Record(value, ToTagArray(attributes));
+            var sanitized = this.sanitizer.SanitizeMetricTags(attributes, definition.AllowedTagKeys);
+            histogram.Record(value, this.sanitizer.ToTagArray(sanitized));
         }
 
         public void Dispose()
         {
+            this.ForceFlush(5000);
+            this.logging.Dispose();
             this.tracerProvider.Dispose();
             this.meterProvider.Dispose();
             this.activitySource.Dispose();
@@ -170,6 +200,14 @@ namespace FwoTelemetry.OpenTelemetry
             var builder = ResourceBuilder.CreateDefault().AddService(
                 serviceName: options.ServiceName,
                 serviceVersion: options.ServiceVersion);
+
+            if (!string.IsNullOrWhiteSpace(options.EnvironmentName))
+            {
+                builder.AddAttributes(new[]
+                {
+                    new KeyValuePair<string, object>("deployment.environment", options.EnvironmentName),
+                });
+            }
 
             if (options.ResourceAttributes != null)
             {
@@ -185,12 +223,27 @@ namespace FwoTelemetry.OpenTelemetry
             return builder;
         }
 
-        private static void ConfigureExporter(
+        private static void ConfigureTraceExporter(
             global::OpenTelemetry.Exporter.OtlpExporterOptions exporterOptions,
             TelemetryOptions options)
         {
-            exporterOptions.Endpoint = new Uri(options.OtlpEndpoint);
+            exporterOptions.Endpoint = BuildSignalEndpoint(options.OtlpEndpoint, "v1/traces");
             exporterOptions.Protocol = global::OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
+            exporterOptions.TimeoutMilliseconds = options.ExportTimeoutMilliseconds;
+
+            if (!string.IsNullOrWhiteSpace(options.OtlpHeaders))
+            {
+                exporterOptions.Headers = options.OtlpHeaders;
+            }
+        }
+
+        private static void ConfigureMetricExporter(
+            global::OpenTelemetry.Exporter.OtlpExporterOptions exporterOptions,
+            TelemetryOptions options)
+        {
+            exporterOptions.Endpoint = BuildSignalEndpoint(options.OtlpEndpoint, "v1/metrics");
+            exporterOptions.Protocol = global::OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
+            exporterOptions.TimeoutMilliseconds = options.ExportTimeoutMilliseconds;
 
             if (!string.IsNullOrWhiteSpace(options.OtlpHeaders))
             {
@@ -239,22 +292,47 @@ namespace FwoTelemetry.OpenTelemetry
                 && activityContext.SpanId.ToString() != "0000000000000000";
         }
 
-        private static KeyValuePair<string, object>[] ToTagArray(IDictionary<string, object> attributes)
+        private static TelemetryOptions NormalizeOptions(TelemetryOptions options)
         {
-            if (attributes == null || attributes.Count == 0)
+            if (options.SamplingRatio < 0.0)
             {
-                return Array.Empty<KeyValuePair<string, object>>();
+                options.SamplingRatio = 0.0;
+            }
+            else if (options.SamplingRatio > 1.0)
+            {
+                options.SamplingRatio = 1.0;
             }
 
-            var tags = new KeyValuePair<string, object>[attributes.Count];
-            var index = 0;
-
-            foreach (var entry in attributes)
+            if (options.ExportTimeoutMilliseconds <= 0)
             {
-                tags[index++] = new KeyValuePair<string, object>(entry.Key, entry.Value);
+                options.ExportTimeoutMilliseconds = 10000;
             }
 
-            return tags;
+            return options;
+        }
+
+        private static Uri BuildSignalEndpoint(string endpoint, string signalPath)
+        {
+            var uri = new Uri(endpoint);
+
+            if (uri.AbsolutePath.EndsWith(signalPath, StringComparison.OrdinalIgnoreCase))
+            {
+                return uri;
+            }
+
+            var builder = new UriBuilder(uri);
+            var path = builder.Path ?? string.Empty;
+
+            if (string.IsNullOrWhiteSpace(path) || path == "/")
+            {
+                builder.Path = signalPath;
+            }
+            else
+            {
+                builder.Path = path.TrimEnd('/') + "/" + signalPath;
+            }
+
+            return builder.Uri;
         }
     }
 }

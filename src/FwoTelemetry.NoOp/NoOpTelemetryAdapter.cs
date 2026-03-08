@@ -30,6 +30,11 @@ namespace FwoTelemetry.NoOp
             return NoOpTelemetrySpan.Instance;
         }
 
+        public bool ForceFlush(int timeoutMilliseconds)
+        {
+            return true;
+        }
+
         public void IncrementCounter(
             string name,
             long value = 1,

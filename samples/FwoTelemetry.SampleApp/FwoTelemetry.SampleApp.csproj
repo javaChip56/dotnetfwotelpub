@@ -10,4 +10,9 @@
     <ProjectReference Include="..\..\src\FwoTelemetry.OpenTelemetry\FwoTelemetry.OpenTelemetry.csproj" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

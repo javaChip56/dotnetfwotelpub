@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyDescriptionAttribute(("Net45-compatible telemetry abstractions for spans, metrics, propagation, and logg" +
     "ing hooks."))]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37f60745011cb68eea5eabcd7644462fe2501b62")]
 [assembly: System.Reflection.AssemblyProductAttribute("FwoTelemetry.Abstractions")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FwoTelemetry.Abstractions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

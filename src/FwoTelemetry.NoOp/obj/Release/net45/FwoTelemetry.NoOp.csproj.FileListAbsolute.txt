@@ -10,3 +10,4 @@ D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry
 D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelem.D721758C.Up2Date
 D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.dll
 D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.pdb
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.sourcelink.json

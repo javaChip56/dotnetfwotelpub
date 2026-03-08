@@ -7,3 +7,4 @@ D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoT
 D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.csproj.CoreCompileInputs.cache
 D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.dll
 D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.pdb
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.sourcelink.json

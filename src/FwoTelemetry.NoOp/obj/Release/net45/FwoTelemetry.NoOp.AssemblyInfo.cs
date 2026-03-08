@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyDescriptionAttribute(("No-op telemetry implementation for net45-compatible applications using the FwoTel" +
     "emetry abstractions."))]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37f60745011cb68eea5eabcd7644462fe2501b62")]
 [assembly: System.Reflection.AssemblyProductAttribute("FwoTelemetry.NoOp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FwoTelemetry.NoOp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

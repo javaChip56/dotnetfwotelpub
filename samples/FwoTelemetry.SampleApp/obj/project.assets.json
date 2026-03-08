@@ -384,6 +384,75 @@
           }
         }
       },
+      "OpenTelemetry.Instrumentation.AspNet/1.15.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "10.0.0",
+          "Microsoft.Extensions.Options": "10.0.0",
+          "OpenTelemetry.Api.ProviderBuilderExtensions": "[1.15.0, 2.0.0)",
+          "OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule": "1.15.1"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ],
+        "compile": {
+          "lib/net462/OpenTelemetry.Instrumentation.AspNet.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net462/OpenTelemetry.Instrumentation.AspNet.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule/1.15.1": {
+        "type": "package",
+        "dependencies": {
+          "OpenTelemetry.Api": "[1.15.0, 2.0.0)"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ],
+        "compile": {
+          "lib/net462/OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net462/OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule.dll": {
+            "related": ".xml"
+          }
+        },
+        "contentFiles": {
+          "contentFiles/any/any/_._": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          }
+        }
+      },
+      "OpenTelemetry.Instrumentation.Http/1.15.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "10.0.0",
+          "Microsoft.Extensions.Options": "10.0.0",
+          "OpenTelemetry.Api.ProviderBuilderExtensions": "[1.15.0, 2.0.0)"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net462/OpenTelemetry.Instrumentation.Http.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net462/OpenTelemetry.Instrumentation.Http.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Buffers/4.6.1": {
         "type": "package",
         "compile": {
@@ -393,6 +462,25 @@
         },
         "runtime": {
           "lib/net462/System.Buffers.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net462/_._": {}
+        }
+      },
+      "System.Configuration.ConfigurationManager/10.0.3": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Configuration"
+        ],
+        "compile": {
+          "lib/net462/System.Configuration.ConfigurationManager.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net462/System.Configuration.ConfigurationManager.dll": {
             "related": ".xml"
           }
         },
@@ -578,6 +666,9 @@
           "OpenTelemetry.Api": "1.15.0",
           "OpenTelemetry.Exporter.Console": "1.15.0",
           "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.15.0",
+          "OpenTelemetry.Instrumentation.AspNet": "1.15.1",
+          "OpenTelemetry.Instrumentation.Http": "1.15.0",
+          "System.Configuration.ConfigurationManager": "10.0.3",
           "System.Diagnostics.DiagnosticSource": "10.0.0"
         },
         "compile": {
@@ -971,6 +1062,75 @@
           }
         }
       },
+      "OpenTelemetry.Instrumentation.AspNet/1.15.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "10.0.0",
+          "Microsoft.Extensions.Options": "10.0.0",
+          "OpenTelemetry.Api.ProviderBuilderExtensions": "[1.15.0, 2.0.0)",
+          "OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule": "1.15.1"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ],
+        "compile": {
+          "lib/net462/OpenTelemetry.Instrumentation.AspNet.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net462/OpenTelemetry.Instrumentation.AspNet.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule/1.15.1": {
+        "type": "package",
+        "dependencies": {
+          "OpenTelemetry.Api": "[1.15.0, 2.0.0)"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ],
+        "compile": {
+          "lib/net462/OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net462/OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule.dll": {
+            "related": ".xml"
+          }
+        },
+        "contentFiles": {
+          "contentFiles/any/any/_._": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          }
+        }
+      },
+      "OpenTelemetry.Instrumentation.Http/1.15.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "10.0.0",
+          "Microsoft.Extensions.Options": "10.0.0",
+          "OpenTelemetry.Api.ProviderBuilderExtensions": "[1.15.0, 2.0.0)"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net462/OpenTelemetry.Instrumentation.Http.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net462/OpenTelemetry.Instrumentation.Http.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Buffers/4.6.1": {
         "type": "package",
         "compile": {
@@ -980,6 +1140,25 @@
         },
         "runtime": {
           "lib/net462/System.Buffers.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net462/_._": {}
+        }
+      },
+      "System.Configuration.ConfigurationManager/10.0.3": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Configuration"
+        ],
+        "compile": {
+          "lib/net462/System.Configuration.ConfigurationManager.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net462/System.Configuration.ConfigurationManager.dll": {
             "related": ".xml"
           }
         },
@@ -1165,6 +1344,9 @@
           "OpenTelemetry.Api": "1.15.0",
           "OpenTelemetry.Exporter.Console": "1.15.0",
           "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.15.0",
+          "OpenTelemetry.Instrumentation.AspNet": "1.15.1",
+          "OpenTelemetry.Instrumentation.Http": "1.15.0",
+          "System.Configuration.ConfigurationManager": "10.0.3",
           "System.Diagnostics.DiagnosticSource": "10.0.0"
         },
         "compile": {
@@ -2170,6 +2352,64 @@
         "opentelemetry.exporter.opentelemetryprotocol.nuspec"
       ]
     },
+    "OpenTelemetry.Instrumentation.AspNet/1.15.1": {
+      "sha512": "6lmdV8qqndbRQPNz+7/CaRDkse8PsaKp+WCKUMfJK0mHhWvs44h0fQvKqILbqZjw6Ilt5S/C9kAusOvxgEkTrw==",
+      "type": "package",
+      "path": "opentelemetry.instrumentation.aspnet/1.15.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "README.md",
+        "lib/net462/OpenTelemetry.Instrumentation.AspNet.dll",
+        "lib/net462/OpenTelemetry.Instrumentation.AspNet.xml",
+        "opentelemetry-icon-color.png",
+        "opentelemetry.instrumentation.aspnet.1.15.1.nupkg.sha512",
+        "opentelemetry.instrumentation.aspnet.nuspec"
+      ]
+    },
+    "OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule/1.15.1": {
+      "sha512": "JymBHsRLQM0PxgOZ0Mi9iaWQN+74Ex7qrEcLABgohIRoo5Vo7dMObLXfEja5PpFTOyKe5kUMfA4tkGwnnc+bfA==",
+      "type": "package",
+      "path": "opentelemetry.instrumentation.aspnet.telemetryhttpmodule/1.15.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "README.md",
+        "content/web.config.install.xdt",
+        "content/web.config.uninstall.xdt",
+        "contentFiles/any/net462/web.config.install.xdt",
+        "contentFiles/any/net462/web.config.uninstall.xdt",
+        "lib/net462/OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule.dll",
+        "lib/net462/OpenTelemetry.Instrumentation.AspNet.TelemetryHttpModule.xml",
+        "opentelemetry-icon-color.png",
+        "opentelemetry.instrumentation.aspnet.telemetryhttpmodule.1.15.1.nupkg.sha512",
+        "opentelemetry.instrumentation.aspnet.telemetryhttpmodule.nuspec"
+      ]
+    },
+    "OpenTelemetry.Instrumentation.Http/1.15.0": {
+      "sha512": "uToc7bUp8IEdb0ny9mKsL6FrrYelINPzxxiSShJgOf4XmQc4Azww6S5RjRj24YhsOn2a1MABOrxfVTZXtDk4Eg==",
+      "type": "package",
+      "path": "opentelemetry.instrumentation.http/1.15.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "README.md",
+        "lib/net10.0/OpenTelemetry.Instrumentation.Http.dll",
+        "lib/net10.0/OpenTelemetry.Instrumentation.Http.xml",
+        "lib/net462/OpenTelemetry.Instrumentation.Http.dll",
+        "lib/net462/OpenTelemetry.Instrumentation.Http.xml",
+        "lib/net8.0/OpenTelemetry.Instrumentation.Http.dll",
+        "lib/net8.0/OpenTelemetry.Instrumentation.Http.xml",
+        "lib/netstandard2.0/OpenTelemetry.Instrumentation.Http.dll",
+        "lib/netstandard2.0/OpenTelemetry.Instrumentation.Http.xml",
+        "opentelemetry-icon-color.png",
+        "opentelemetry.instrumentation.http.1.15.0.nupkg.sha512",
+        "opentelemetry.instrumentation.http.nuspec"
+      ]
+    },
     "System.Buffers/4.6.1": {
       "sha512": "N8GXpmiLMtljq7gwvyS+1QvKT/W2J8sNAvx+HVg4NGmsG/H+2k/y9QI23auLJRterrzCiDH+IWAw4V/GPwsMlw==",
       "type": "package",
@@ -2189,6 +2429,35 @@
         "lib/netstandard2.1/_._",
         "system.buffers.4.6.1.nupkg.sha512",
         "system.buffers.nuspec"
+      ]
+    },
+    "System.Configuration.ConfigurationManager/10.0.3": {
+      "sha512": "69ZT/MYxQSxwdiiHRtI08noXiG5drj/bXDDZISmeWkNUtbIfYgmTiof16tCVOLTdmSQY7W7gwxkMliKdreWHGQ==",
+      "type": "package",
+      "path": "system.configuration.configurationmanager/10.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Configuration.ConfigurationManager.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Configuration.ConfigurationManager.targets",
+        "lib/net10.0/System.Configuration.ConfigurationManager.dll",
+        "lib/net10.0/System.Configuration.ConfigurationManager.xml",
+        "lib/net462/System.Configuration.ConfigurationManager.dll",
+        "lib/net462/System.Configuration.ConfigurationManager.xml",
+        "lib/net8.0/System.Configuration.ConfigurationManager.dll",
+        "lib/net8.0/System.Configuration.ConfigurationManager.xml",
+        "lib/net9.0/System.Configuration.ConfigurationManager.dll",
+        "lib/net9.0/System.Configuration.ConfigurationManager.xml",
+        "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll",
+        "lib/netstandard2.0/System.Configuration.ConfigurationManager.xml",
+        "system.configuration.configurationmanager.10.0.3.nupkg.sha512",
+        "system.configuration.configurationmanager.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
     "System.Diagnostics.DiagnosticSource/10.0.0": {
@@ -2460,12 +2729,19 @@
           }
         },
         "centralPackageVersions": {
+          "coverlet.collector": "6.0.2",
+          "Microsoft.NET.Test.Sdk": "17.12.0",
           "Microsoft.NETFramework.ReferenceAssemblies": "1.0.3",
           "OpenTelemetry": "1.15.0",
           "OpenTelemetry.Api": "1.15.0",
           "OpenTelemetry.Exporter.Console": "1.15.0",
           "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.15.0",
-          "System.Diagnostics.DiagnosticSource": "10.0.0"
+          "OpenTelemetry.Instrumentation.AspNet": "1.15.1",
+          "OpenTelemetry.Instrumentation.Http": "1.15.0",
+          "System.Configuration.ConfigurationManager": "10.0.3",
+          "System.Diagnostics.DiagnosticSource": "10.0.0",
+          "xunit": "2.9.2",
+          "xunit.runner.visualstudio": "2.8.2"
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
       }
