@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>FwoTelemetry.Abstractions</id>
+    <version>1.0.1</version>
+    <title>FwoTelemetry Abstractions</title>
+    <authors>FwoTelemetry.Abstractions</authors>
+    <readme>README.package.md</readme>
+    <description>Net45-compatible telemetry abstractions for spans, metrics, propagation, and logging hooks.</description>
+    <tags>opentelemetry otel telemetry net45 net48</tags>
+    <repository type="git" commit="7f77c44c4891f21fa8d09ae146482503dd443b8b" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.5" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\bin\Release\net45\FwoTelemetry.Abstractions.dll" target="lib\net45\FwoTelemetry.Abstractions.dll" />
+    <file src="D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\README.package.md" target="\README.package.md" />
+  </files>
+</package>

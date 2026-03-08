@@ -395,6 +395,43 @@ dotnet build .\DotNetFWOtelPub.sln
 dotnet pack .\DotNetFWOtelPub.sln -c Release -o .\artifacts\packages
 ```
 
+## Release Automation
+
+Build, test, run collector validation, and pack a specific version:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\pack-release.ps1 -Version 1.0.1
+```
+
+Publish already-built packages to NuGet:
+
+```powershell
+$env:NUGET_API_KEY = "your-nuget-api-key"
+powershell -ExecutionPolicy Bypass -File .\scripts\publish-nuget.ps1 -Version 1.0.1
+```
+
+Run the full release flow and publish in one command:
+
+```powershell
+$env:NUGET_API_KEY = "your-nuget-api-key"
+powershell -ExecutionPolicy Bypass -File .\scripts\release.ps1 -Version 1.0.1 -Publish
+```
+
+Available scripts:
+
+- `scripts\pack-release.ps1`: restore, build, test, collector validation, and pack versioned packages
+- `scripts\publish-nuget.ps1`: push `.nupkg` and `.snupkg` files to NuGet with `--skip-duplicate`
+- `scripts\release.ps1`: wrapper that runs pack and optionally publish
+
+Useful flags:
+
+- `-SkipCollectorValidation` to skip Docker-based collector validation during a release pack
+- `-SkipTests` or `-SkipBuild` for controlled reruns
+- `-SkipSymbols` to publish only primary packages
+- `-Source` to publish to a non-default feed
+
+The scripts stamp package versions using `-p:Version=<version>`, so you do not need to edit project files for each release.
+
 ## Sample
 
 ```powershell

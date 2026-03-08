@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>FwoTelemetry.OpenTelemetry</id>
+    <version>1.0.1</version>
+    <title>FwoTelemetry OpenTelemetry Adapter</title>
+    <authors>FwoTelemetry.OpenTelemetry</authors>
+    <readme>README.package.md</readme>
+    <description>OpenTelemetry-backed implementation of the FwoTelemetry abstraction surface for .NET Framework 4.8.</description>
+    <tags>opentelemetry otel telemetry net48 legacy</tags>
+    <repository type="git" commit="7f77c44c4891f21fa8d09ae146482503dd443b8b" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.8">
+        <dependency id="FwoTelemetry.Abstractions" version="1.0.1" exclude="Build,Analyzers" />
+        <dependency id="OpenTelemetry" version="1.15.0" exclude="Build,Analyzers" />
+        <dependency id="OpenTelemetry.Api" version="1.15.0" exclude="Build,Analyzers" />
+        <dependency id="OpenTelemetry.Exporter.Console" version="1.15.0" exclude="Build,Analyzers" />
+        <dependency id="OpenTelemetry.Exporter.OpenTelemetryProtocol" version="1.15.0" exclude="Build,Analyzers" />
+        <dependency id="OpenTelemetry.Instrumentation.AspNet" version="1.15.1" exclude="Build,Analyzers" />
+        <dependency id="OpenTelemetry.Instrumentation.Http" version="1.15.0" exclude="Build,Analyzers" />
+        <dependency id="System.Configuration.ConfigurationManager" version="10.0.3" exclude="Build,Analyzers" />
+        <dependency id="System.Diagnostics.DiagnosticSource" version="10.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\bin\Release\net48\FwoTelemetry.OpenTelemetry.dll" target="lib\net48\FwoTelemetry.OpenTelemetry.dll" />
+    <file src="D:\Research\DotNetFWOtelPub\src\FwoTelemetry.OpenTelemetry\README.package.md" target="\README.package.md" />
+  </files>
+</package>
