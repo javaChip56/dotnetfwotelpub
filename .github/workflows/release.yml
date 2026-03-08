@@ -120,7 +120,7 @@ jobs:
   publish-nuget:
     needs: build-pack
     runs-on: windows-latest
-    if: (github.event_name == 'push' || inputs.publish_to_nuget) && secrets.NUGET_API_KEY != ''
+    if: github.event_name == 'push' || inputs.publish_to_nuget
     environment: nuget
 
     steps:
@@ -137,6 +137,15 @@ jobs:
         with:
           name: ${{ needs.build-pack.outputs.artifact_name }}
           path: .\packages
+
+      - name: Validate NuGet API key
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:NUGET_API_KEY)) {
+            throw "NUGET_API_KEY is not configured. Add it as a repository or environment secret before publishing."
+          }
 
       - name: Publish to NuGet.org
         shell: pwsh
