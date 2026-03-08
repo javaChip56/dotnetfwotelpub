@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>FwoTelemetry.OpenTelemetry</RootNamespace>
+    <PackageId>FwoTelemetry.OpenTelemetry</PackageId>
+    <Title>FwoTelemetry OpenTelemetry Adapter</Title>
+    <Description>OpenTelemetry-backed implementation of the FwoTelemetry abstraction surface for .NET Framework 4.8.</Description>
+    <PackageTags>opentelemetry;otel;telemetry;net48;legacy</PackageTags>
+    <PackageReadmeFile>README.package.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FwoTelemetry.Abstractions\FwoTelemetry.Abstractions.csproj" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" />
+    <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="OpenTelemetry.Api" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.package.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

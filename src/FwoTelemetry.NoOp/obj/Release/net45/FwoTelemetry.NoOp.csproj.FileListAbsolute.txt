@@ -1,0 +1,12 @@
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\bin\Release\net45\FwoTelemetry.NoOp.dll
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\bin\Release\net45\FwoTelemetry.NoOp.pdb
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\bin\Release\net45\FwoTelemetry.Abstractions.dll
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\bin\Release\net45\FwoTelemetry.Abstractions.pdb
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.csproj.AssemblyReference.cache
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.GeneratedMSBuildEditorConfig.editorconfig
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.AssemblyInfoInputs.cache
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.AssemblyInfo.cs
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.csproj.CoreCompileInputs.cache
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelem.D721758C.Up2Date
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.dll
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\obj\Release\net45\FwoTelemetry.NoOp.pdb

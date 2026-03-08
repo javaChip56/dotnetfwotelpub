@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.Abstractions\\FwoTelemetry.Abstractions.csproj": {}
+  },
+  "projects": {
+    "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.Abstractions\\FwoTelemetry.Abstractions.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.Abstractions\\FwoTelemetry.Abstractions.csproj",
+        "projectName": "FwoTelemetry.Abstractions",
+        "projectPath": "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.Abstractions\\FwoTelemetry.Abstractions.csproj",
+        "packagesPath": "C:\\Users\\Button\\.nuget\\packages\\",
+        "outputPath": "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.Abstractions\\obj\\",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Button\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net45"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net45": {
+            "targetAlias": "net45",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net45": {
+          "targetAlias": "net45",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "Microsoft.NETFramework.ReferenceAssemblies": "1.0.3",
+            "OpenTelemetry": "1.15.0",
+            "OpenTelemetry.Api": "1.15.0",
+            "OpenTelemetry.Exporter.Console": "1.15.0",
+            "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.15.0",
+            "System.Diagnostics.DiagnosticSource": "10.0.0"
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

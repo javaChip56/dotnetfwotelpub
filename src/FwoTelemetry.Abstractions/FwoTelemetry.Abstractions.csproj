@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+    <RootNamespace>FwoTelemetry.Abstractions</RootNamespace>
+    <PackageId>FwoTelemetry.Abstractions</PackageId>
+    <Title>FwoTelemetry Abstractions</Title>
+    <Description>Net45-compatible telemetry abstractions for spans, metrics, propagation, and logging hooks.</Description>
+    <PackageTags>opentelemetry;otel;telemetry;net45;net48</PackageTags>
+    <PackageReadmeFile>README.package.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.package.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

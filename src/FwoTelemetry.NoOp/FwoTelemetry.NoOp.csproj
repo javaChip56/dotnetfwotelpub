@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+    <RootNamespace>FwoTelemetry.NoOp</RootNamespace>
+    <PackageId>FwoTelemetry.NoOp</PackageId>
+    <Title>FwoTelemetry NoOp</Title>
+    <Description>No-op telemetry implementation for net45-compatible applications using the FwoTelemetry abstractions.</Description>
+    <PackageTags>opentelemetry;otel;telemetry;noop;net45</PackageTags>
+    <PackageReadmeFile>README.package.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FwoTelemetry.Abstractions\FwoTelemetry.Abstractions.csproj" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.package.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

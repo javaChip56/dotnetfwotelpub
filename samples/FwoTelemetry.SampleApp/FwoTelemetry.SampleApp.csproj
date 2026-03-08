@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>FwoTelemetry.SampleApp</RootNamespace>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\FwoTelemetry.Abstractions\FwoTelemetry.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\FwoTelemetry.OpenTelemetry\FwoTelemetry.OpenTelemetry.csproj" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

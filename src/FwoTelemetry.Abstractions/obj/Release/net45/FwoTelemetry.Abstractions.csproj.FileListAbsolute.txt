@@ -1,0 +1,9 @@
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\bin\Release\net45\FwoTelemetry.Abstractions.dll
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\bin\Release\net45\FwoTelemetry.Abstractions.pdb
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.csproj.AssemblyReference.cache
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.GeneratedMSBuildEditorConfig.editorconfig
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.AssemblyInfoInputs.cache
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.AssemblyInfo.cs
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.csproj.CoreCompileInputs.cache
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.dll
+D:\Research\DotNetFWOtelPub\src\FwoTelemetry.Abstractions\obj\Release\net45\FwoTelemetry.Abstractions.pdb
