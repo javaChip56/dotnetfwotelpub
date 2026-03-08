@@ -162,6 +162,103 @@ telemetry.Logging.Log(
     properties: properties);
 ```
 
+### Where to use the adapter
+
+Use the adapter at code boundaries where work starts, where work is handed off, and where expensive work happens.
+
+Typical placement in legacy .NET Framework applications:
+
+- `Global.asax`, MVC filters, Web API handlers, or HTTP modules for inbound web requests
+- Windows Service startup and worker loops
+- WCF service methods and client wrappers
+- message queue publishers and consumers
+- scheduled jobs, batch entrypoints, and console commands
+- service-layer methods for major business operations
+- outbound HTTP, database, queue, and third-party API calls
+- exception handling and legacy logging pipelines
+
+Practical rule:
+
+- Start a span when an operation begins
+- add child spans for important internal steps
+- inject context before outbound calls
+- extract context when receiving inbound work
+- record counters and histograms for throughput and duration
+- enrich logs with the current trace and span identifiers
+
+### How to track telemetry across the whole codebase
+
+The adapter does not automatically trace every line of code. The reliable way to track the application is to use one shared `ITelemetryAdapter` instance and apply it consistently at entrypoints and cross-process boundaries.
+
+Recommended pattern:
+
+1. Create the adapter once at application startup.
+2. Pass `ITelemetryAdapter` into controllers, services, handlers, and background workers.
+3. Start one parent span per incoming request, message, or job.
+4. Start child spans for major operations such as validation, database work, external HTTP calls, and publishing messages.
+5. Use `telemetry.Propagator.Inject(...)` on outbound messages or HTTP headers.
+6. Use `telemetry.Propagator.Extract(...)` on inbound messages or HTTP headers to continue the same trace.
+7. Use `telemetry.Logging.Enrich(...)` or `telemetry.Logging.Log(...)` so logs carry `trace.id` and `span.id`.
+8. Export traces and metrics to the same OTLP backend so requests, dependencies, durations, and failures can be correlated.
+
+Example layout:
+
+```csharp
+public sealed class OrderService
+{
+    private readonly ITelemetryAdapter telemetry;
+
+    public OrderService(ITelemetryAdapter telemetry)
+    {
+        this.telemetry = telemetry;
+    }
+
+    public void Submit(Order order)
+    {
+        using (var span = this.telemetry.StartSpan("orders.submit"))
+        {
+            Validate(order);
+            Save(order);
+            Publish(order);
+            span.SetStatus(TelemetryStatusCode.Ok);
+        }
+    }
+
+    private void Validate(Order order)
+    {
+        using (var span = this.telemetry.StartSpan("orders.validate"))
+        {
+            span.SetAttribute("order.id", order.Id);
+        }
+    }
+
+    private void Save(Order order)
+    {
+        using (var span = this.telemetry.StartSpan("orders.save"))
+        {
+            this.telemetry.RecordHistogram("orders.db.duration.ms", 12.0, unit: "ms");
+        }
+    }
+
+    private void Publish(Order order)
+    {
+        using (var span = this.telemetry.StartSpan("orders.publish", TelemetrySpanKind.Producer))
+        {
+            var headers = new Dictionary<string, string>();
+            this.telemetry.Propagator.Inject(headers);
+        }
+    }
+}
+```
+
+If you follow that pattern, the backend can show:
+
+- the full request or job trace
+- child operations inside that trace
+- the link between outbound and inbound components
+- correlated logs for the same trace
+- metrics such as request count and duration for the same operations
+
 ## Build
 
 ```powershell
