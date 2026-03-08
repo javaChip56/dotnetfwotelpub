@@ -397,6 +397,8 @@ dotnet pack .\DotNetFWOtelPub.sln -c Release -o .\artifacts\packages
 
 ## Release Automation
 
+### Local scripts
+
 Build, test, run collector validation, and pack a specific version:
 
 ```powershell
@@ -431,6 +433,47 @@ Useful flags:
 - `-Source` to publish to a non-default feed
 
 The scripts stamp package versions using `-p:Version=<version>`, so you do not need to edit project files for each release.
+
+### GitHub Actions
+
+This repository now includes two workflows:
+
+- `.github/workflows/ci.yml`: runs restore, build, and test on `push` to `main`, pull requests, and manual dispatch
+- `.github/workflows/release.yml`: builds, tests, packs, creates or updates a GitHub release, and can publish to NuGet
+
+Required GitHub secret:
+
+- `NUGET_API_KEY`: NuGet.org API key used by the release workflow when publishing packages
+
+Recommended GitHub environment:
+
+- `nuget`: optional protected environment used by the publish job in `.github/workflows/release.yml`
+
+Release workflow triggers:
+
+- push a tag such as `v1.0.1`
+- run the `release` workflow manually with `workflow_dispatch`
+
+Tag-driven release example:
+
+```powershell
+git tag v1.0.1
+git push origin v1.0.1
+```
+
+What the release workflow does:
+
+1. Resolves the package version from the tag or manual input
+2. Runs `scripts\pack-release.ps1`
+3. Uploads the generated `.nupkg` and `.snupkg` files as workflow artifacts
+4. Creates or updates the matching GitHub release
+5. Publishes the packages to NuGet.org if `NUGET_API_KEY` is available and publishing is enabled
+
+Notes:
+
+- the GitHub-hosted Windows runner is used because the solution builds `net48`
+- collector validation is skipped inside the release workflow because the release job is designed for standard hosted Windows runners; keep `tests\run-collector-validation.ps1` as an explicit pre-release or local validation step
+- the release workflow reuses the local PowerShell scripts so local and CI packaging stay aligned
 
 ## Sample
 
