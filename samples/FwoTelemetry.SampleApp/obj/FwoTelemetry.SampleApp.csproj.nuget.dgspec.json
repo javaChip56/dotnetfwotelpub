@@ -5,7 +5,7 @@
   },
   "projects": {
     "D:\\Research\\DotNetFWOtelPub\\samples\\FwoTelemetry.SampleApp\\FwoTelemetry.SampleApp.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.2",
       "restore": {
         "projectUniqueName": "D:\\Research\\DotNetFWOtelPub\\samples\\FwoTelemetry.SampleApp\\FwoTelemetry.SampleApp.csproj",
         "projectName": "FwoTelemetry.SampleApp",
@@ -90,7 +90,7 @@
       }
     },
     "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.Abstractions\\FwoTelemetry.Abstractions.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.2",
       "restore": {
         "projectUniqueName": "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.Abstractions\\FwoTelemetry.Abstractions.csproj",
         "projectName": "FwoTelemetry.Abstractions",
@@ -163,7 +163,7 @@
       }
     },
     "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.OpenTelemetry\\FwoTelemetry.OpenTelemetry.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.2",
       "restore": {
         "projectUniqueName": "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.OpenTelemetry\\FwoTelemetry.OpenTelemetry.csproj",
         "projectName": "FwoTelemetry.OpenTelemetry",

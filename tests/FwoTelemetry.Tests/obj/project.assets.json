@@ -922,7 +922,7 @@
           "build/net462/xunit.runner.visualstudio.props": {}
         }
       },
-      "FwoTelemetry.Abstractions/1.0.0": {
+      "FwoTelemetry.Abstractions/1.0.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "compile": {
@@ -932,11 +932,11 @@
           "bin/placeholder/FwoTelemetry.Abstractions.dll": {}
         }
       },
-      "FwoTelemetry.NoOp/1.0.0": {
+      "FwoTelemetry.NoOp/1.0.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "FwoTelemetry.Abstractions": "1.0.0"
+          "FwoTelemetry.Abstractions": "1.0.2"
         },
         "compile": {
           "bin/placeholder/FwoTelemetry.NoOp.dll": {}
@@ -945,11 +945,11 @@
           "bin/placeholder/FwoTelemetry.NoOp.dll": {}
         }
       },
-      "FwoTelemetry.OpenTelemetry/1.0.0": {
+      "FwoTelemetry.OpenTelemetry/1.0.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.8",
         "dependencies": {
-          "FwoTelemetry.Abstractions": "1.0.0",
+          "FwoTelemetry.Abstractions": "1.0.2",
           "OpenTelemetry": "1.15.0",
           "OpenTelemetry.Api": "1.15.0",
           "OpenTelemetry.Exporter.Console": "1.15.0",
@@ -2700,17 +2700,17 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "FwoTelemetry.Abstractions/1.0.0": {
+    "FwoTelemetry.Abstractions/1.0.2": {
       "type": "project",
       "path": "../../src/FwoTelemetry.Abstractions/FwoTelemetry.Abstractions.csproj",
       "msbuildProject": "../../src/FwoTelemetry.Abstractions/FwoTelemetry.Abstractions.csproj"
     },
-    "FwoTelemetry.NoOp/1.0.0": {
+    "FwoTelemetry.NoOp/1.0.2": {
       "type": "project",
       "path": "../../src/FwoTelemetry.NoOp/FwoTelemetry.NoOp.csproj",
       "msbuildProject": "../../src/FwoTelemetry.NoOp/FwoTelemetry.NoOp.csproj"
     },
-    "FwoTelemetry.OpenTelemetry/1.0.0": {
+    "FwoTelemetry.OpenTelemetry/1.0.2": {
       "type": "project",
       "path": "../../src/FwoTelemetry.OpenTelemetry/FwoTelemetry.OpenTelemetry.csproj",
       "msbuildProject": "../../src/FwoTelemetry.OpenTelemetry/FwoTelemetry.OpenTelemetry.csproj"
@@ -2718,9 +2718,9 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
-      "FwoTelemetry.Abstractions >= 1.0.0",
-      "FwoTelemetry.NoOp >= 1.0.0",
-      "FwoTelemetry.OpenTelemetry >= 1.0.0",
+      "FwoTelemetry.Abstractions >= 1.0.2",
+      "FwoTelemetry.NoOp >= 1.0.2",
+      "FwoTelemetry.OpenTelemetry >= 1.0.2",
       "Microsoft.NET.Test.Sdk >= 17.12.0",
       "Microsoft.NETFramework.ReferenceAssemblies >= 1.0.3",
       "coverlet.collector >= 6.0.2",
@@ -2733,7 +2733,7 @@
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.2",
     "restore": {
       "projectUniqueName": "D:\\Research\\DotNetFWOtelPub\\tests\\FwoTelemetry.Tests\\FwoTelemetry.Tests.csproj",
       "projectName": "FwoTelemetry.Tests",

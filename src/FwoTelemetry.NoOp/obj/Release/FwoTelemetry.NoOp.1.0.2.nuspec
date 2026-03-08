@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>FwoTelemetry.NoOp</id>
+    <version>1.0.2</version>
+    <title>FwoTelemetry NoOp</title>
+    <authors>FwoTelemetry.NoOp</authors>
+    <readme>README.package.md</readme>
+    <description>No-op telemetry implementation for net45-compatible applications using the FwoTelemetry abstractions.</description>
+    <tags>opentelemetry otel telemetry noop net45</tags>
+    <repository type="git" commit="d741488c54d4d7377c43be13386f6424402462eb" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="FwoTelemetry.Abstractions" version="1.0.2" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\bin\Release\net45\FwoTelemetry.NoOp.dll" target="lib\net45\FwoTelemetry.NoOp.dll" />
+    <file src="D:\Research\DotNetFWOtelPub\src\FwoTelemetry.NoOp\README.package.md" target="\README.package.md" />
+  </files>
+</package>

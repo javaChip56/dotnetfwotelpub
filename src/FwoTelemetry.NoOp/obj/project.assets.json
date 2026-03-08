@@ -14,7 +14,7 @@
           "build/Microsoft.NETFramework.ReferenceAssemblies.net45.targets": {}
         }
       },
-      "FwoTelemetry.Abstractions/1.0.0": {
+      "FwoTelemetry.Abstractions/1.0.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "compile": {
@@ -356,7 +356,7 @@
         "microsoft.netframework.referenceassemblies.net45.nuspec"
       ]
     },
-    "FwoTelemetry.Abstractions/1.0.0": {
+    "FwoTelemetry.Abstractions/1.0.2": {
       "type": "project",
       "path": "../FwoTelemetry.Abstractions/FwoTelemetry.Abstractions.csproj",
       "msbuildProject": "../FwoTelemetry.Abstractions/FwoTelemetry.Abstractions.csproj"
@@ -364,7 +364,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.5": [
-      "FwoTelemetry.Abstractions >= 1.0.0",
+      "FwoTelemetry.Abstractions >= 1.0.2",
       "Microsoft.NETFramework.ReferenceAssemblies >= 1.0.3"
     ]
   },
@@ -373,7 +373,7 @@
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.2",
     "restore": {
       "projectUniqueName": "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.NoOp\\FwoTelemetry.NoOp.csproj",
       "projectName": "FwoTelemetry.NoOp",

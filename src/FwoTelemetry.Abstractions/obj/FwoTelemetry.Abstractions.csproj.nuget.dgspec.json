@@ -5,7 +5,7 @@
   },
   "projects": {
     "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.Abstractions\\FwoTelemetry.Abstractions.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.2",
       "restore": {
         "projectUniqueName": "D:\\Research\\DotNetFWOtelPub\\src\\FwoTelemetry.Abstractions\\FwoTelemetry.Abstractions.csproj",
         "projectName": "FwoTelemetry.Abstractions",
